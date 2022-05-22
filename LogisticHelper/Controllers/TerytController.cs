@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ServiceModel;
 
 namespace LogisticHelper.Controllers
 {
@@ -13,8 +14,13 @@ namespace LogisticHelper.Controllers
 
             client.ClientCredentials.UserName.UserName = "Mariusz.Sobota";
             client.ClientCredentials.UserName.Password = "so6QT8ahG";
-            var result  = client.CzyZalogowanyAsync();
-            return View(result);
+            var result = client.CzyZalogowanyAsync();
+
+           var cos =  client.PobierzListeMiejscowosciWGminieAsync( "slaskie", "gliwicki","gieraltowice",DateTime.Now);
+                return View(cos);
+
+
+
         }
 
         // GET: TerytController/Details/5
