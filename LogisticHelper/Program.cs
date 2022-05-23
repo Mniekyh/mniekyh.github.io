@@ -1,7 +1,9 @@
 using LogisticHelper.DataAccess;
+using LogisticHelper.Repository;
 using LogisticHelper.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Microsoft.Extensions.DependencyInjection;
 
 
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 var app = builder.Build();
 

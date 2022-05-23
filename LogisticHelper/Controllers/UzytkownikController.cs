@@ -1,4 +1,5 @@
 ﻿using LogisticHelper.Models;
+using LogisticHelper.Repository;
 using LogisticHelper.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +8,9 @@ namespace LogisticHelper.Controllers
 {
     public class UzytkownikController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-
+      
         // GET: UzytkownikController
+        private readonly IUnitOfWork _unitOfWork;
         public UzytkownikController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -19,10 +20,10 @@ namespace LogisticHelper.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Uzytkownik> objCoverType = _unitOfWork.Uzytkownik.GetAll();
-            return View(objCoverType);
+           
+            IEnumerable<Uzytkownik> objUzytkownikList = _unitOfWork.Uzytkownik.GetAll();
+            return View(objUzytkownikList);
         }
-
         // GET: UzytkownikController/Create
         public ActionResult Create()
         {
@@ -32,16 +33,29 @@ namespace LogisticHelper.Controllers
         // POST: UzytkownikController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Uzytkownik obj)
         {
-            try
+            /*Some errors for fun*/
+            if (obj.NAZWISKO == obj.IMIE)
             {
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("IdenticalNameToCustomName", "Rodzina bardzo kogoś nie kocha");
+
+
             }
-            catch
+            if (obj.IMIE == null)
             {
-                return View();
+                ModelState.AddModelError("name", "Nazwa nie może być pusta! :/");
             }
+
+            /*if everything correct, create row and go to index*/
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Uzytkownik.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Uzytkownik created successfully";
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
 
         // GET: UzytkownikController/Edit/5

@@ -5,17 +5,12 @@ namespace LogisticHelper.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
-        //T - Class
+        //T - Category
 
         T GetFirstOrDefault(Expression<Func<T, bool>> filter);
-
-        //Get all results
         IEnumerable<T> GetAll();
-
-        void Add(T entity); 
-
+        void Add(T entity);
         void Remove(T entity);
-        void RemoveRange(IEnumerable <T> entity);
-
+        void RemoveRange(IEnumerable<T> entity);
     }
 }

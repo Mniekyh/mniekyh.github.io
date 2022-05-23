@@ -10,6 +10,6 @@ namespace LogisticHelper.DataAccess
 
         }
 
-        public DbSet<Uzytkownik> Uzytkowniks { get; set; }
+        public DbSet<Uzytkownik> Uzytkownik { get; set; }
     }
 }

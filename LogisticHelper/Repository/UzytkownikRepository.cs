@@ -17,7 +17,7 @@ namespace LogisticHelper.Repository
 
         public void Update(Uzytkownik obj)
         {
-            _db.Uzytkowniks.Update(obj);
+            _db.Uzytkownik.Update(obj);
         }
     }
 }

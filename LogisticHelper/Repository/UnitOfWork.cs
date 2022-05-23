@@ -13,9 +13,7 @@ namespace LogisticHelper.Repository
         }
 
         public IUzytkownikRepository Uzytkownik
-        {
-            get; private set; 
-        }
+        { get; private set;   }
 
         public void Save()
         {
